@@ -51,7 +51,8 @@ window.addEventListener("scroll", () => {
 });
 
 // Form validation and submission
-contactForm.addEventListener("submit", async (e) => {
+// UPGRADE: Form Kontak → WhatsApp JUGA!
+contactForm.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const formData = new FormData(contactForm);
@@ -59,45 +60,20 @@ contactForm.addEventListener("submit", async (e) => {
   const phone = formData.get("phone").trim();
   const message = formData.get("message").trim();
 
-  // Simple validation
-  if (name.length < 2) {
-    showAlert("Nama minimal 2 karakter", "error");
-    return;
-  }
+  // Langsung ke WA Admin
+  const waMessage =
+    `📩 *PESAN KONTAK WEB*\n\n` +
+    `👤 *${name}*\n` +
+    `📱 ${phone}\n` +
+    `💬 *${message}*\n\n` +
+    `⏰ ${new Date().toLocaleString("id-ID")}`;
 
-  if (phone.length < 10) {
-    showAlert("Nomor telepon tidak valid", "error");
-    return;
-  }
+  const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(waMessage)}`;
+  window.open(whatsappUrl, "_blank");
 
-  if (message.length < 5) {
-    showAlert("Pesan minimal 5 karakter", "error");
-    return;
-  }
-
-  // Show loading state
-  const submitText = submitBtn.querySelector(".submit-text");
-  const loadingText = submitBtn.querySelector(".loading-text");
-  submitText.classList.add("hidden");
-  loadingText.classList.remove("hidden");
-  submitBtn.disabled = true;
-
-  // Simulate API call
-  await new Promise((resolve) => setTimeout(resolve, 2000));
-
-  // Reset form and show success
+  // Reset & sukses
   contactForm.reset();
-  submitText.classList.remove("hidden");
-  loadingText.classList.add("hidden");
-  submitBtn.disabled = false;
-
-  showAlert(
-    "Pesan berhasil dikirim! Kami akan segera menghubungi Anda.",
-    "success",
-  );
-
-  // Scroll to top
-  window.scrollTo({ top: 0, behavior: "smooth" });
+  showAlert("✅ Pesan terkirim ke WhatsApp Admin!", "success");
 });
 
 // Alert function
