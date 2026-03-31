@@ -68,7 +68,7 @@ contactForm.addEventListener("submit", (e) => {
     `💬 *${message}*\n\n` +
     `⏰ ${new Date().toLocaleString("id-ID")}`;
 
-  const whatsappUrl = `https://wa.me/6281234567890?text=${encodeURIComponent(waMessage)}`;
+  const whatsappUrl = `https://wa.me/6282129546021?text=${encodeURIComponent(waMessage)}`;
   window.open(whatsappUrl, "_blank");
 
   // Reset & sukses
